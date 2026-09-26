@@ -42,3 +42,20 @@ Use the direct connection string for `SUPABASE_MIGRATION_DATABASE_URL`. If the d
 - `pnpm db:studio` opens Drizzle Studio against the migration connection.
 
 Migration commands require real development credentials. Review generated SQL before applying it, and never point local migration commands at production unintentionally.
+
+## Authentication configuration
+
+Authentication uses `@supabase/ssr` with cookie-based sessions. Browser and server clients use only `NEXT_PUBLIC_SUPABASE_URL` and `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY`; `SUPABASE_SECRET_KEY` remains server-only and is not used for user authentication.
+
+For local development, configure Supabase Authentication URL settings with:
+
+- Site URL: `http://localhost:3000`
+- Redirect URL: `http://localhost:3000/auth/confirm`
+
+If Confirm Email is enabled, update the Confirm signup email template link to:
+
+```html
+<a href="{{ .SiteURL }}/auth/confirm?token_hash={{ .TokenHash }}&type=email">Confirm email</a>
+```
+
+With email confirmation enabled, signup displays a confirmation-required message and the confirmation route exchanges the token hash for a cookie-backed session. With confirmation disabled, signup creates the session immediately and redirects to the temporary `/account` verification page.

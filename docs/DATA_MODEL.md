@@ -7,7 +7,7 @@ This document describes the PostgreSQL schema introduced by MVP-005. Supabase ow
 - Primary keys use PostgreSQL-generated UUIDs.
 - Timestamps use `timestamptz`.
 - Every user-owned row includes `user_id` referencing `auth.users(id)` with `ON DELETE CASCADE`.
-- Every Newshelf table has Row Level Security enabled. No policies exist yet, so Data API access is denied until MVP-006 deliberately adds policies.
+- Every Newshelf table has Row Level Security enabled. No policies exist yet, so Data API access remains denied until a later issue deliberately adds policies for authenticated data access.
 - Cross-table relationships include `user_id` in composite foreign keys wherever ownership could otherwise cross users.
 - `updated_at` defaults to `now()` and is maintained by application writes; no update triggers are installed.
 
@@ -174,6 +174,6 @@ Database constraints prevent cross-user ownership mismatches between the core ta
 
 ## Deferred schema work
 
-- MVP-006 will define RLS policies alongside authentication behavior.
+- A later issue will define RLS policies alongside authenticated Newshelf data access.
 - MVP-036 will add Postgres-native full-text search indexes after the query shape is implemented.
 - No external search service, vector database, or global publication graph is planned for the MVP.
